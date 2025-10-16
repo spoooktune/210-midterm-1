@@ -37,35 +37,37 @@ public:
 
         Node* temp = head; // temp pointer created to help with traversing array
         for (int i = 0; i < position && temp; ++i) // traverses array until specified position is reached or until temp = nullptr
-            temp = temp->next;
+            temp = temp->next; // sets temp as pointer to next node in the linked list
 
-        if (!temp) {
-            cout << "Position exceeds list size. Node not inserted.\n";
-            delete newNode;
+        if (!temp) { // if temp becomes nullptr -> specified position is greater than the # of elements in list
+            cout << "Position exceeds list size. Node not inserted.\n"; // display error message for user
+            delete newNode; // frees up storage space
             return;
         }
 
-        newNode->next = temp->next;
-        newNode->prev = temp;
-        if (temp->next)
-            temp->next->prev = newNode;
-        else
-            tail = newNode;
-        temp->next = newNode;
+        // if previous if statements are not called, then position is valid, newNode can be inserted after it
+        newNode->next = temp->next; // newNode points to the node that was previously after temp 
+        newNode->prev = temp; // temp is node at specified position, so it is before newNode
+        if (temp->next) // if temp has a node specified after it (temp->next is not nullptr)
+            temp->next->prev = newNode; // sets node that was previously after temp to be after newNode
+        else // temp->next = nullptr, so temp was the tail
+            tail = newNode; // newNode becomes the new tail
+        temp->next = newNode; // temp points to the new tail
     }
 
-    void delete_val(int value) {
-        if (!head) return;
+    void delete_val(int value) { // delete's node based on the data var of Node
+        if (!head) return; // if there is no head, there is nothing to delete, code exits
 
-        Node* temp = head;
+        Node* temp = head; // for traversing the array, starts at head of list
         
-        while (temp && temp->data != value)
-            temp = temp->next;
+        while (temp && temp->data != value) // while temp exists, and the data of temp is not the same as value
+            temp = temp->next; // temp is set to next node in list
 
-        if (!temp) return; 
+        if (!temp) return; // if temp does not exist, there is no node where data == value, exits
 
-        if (temp->prev)
-            temp->prev->next = temp->next;
+        // if none of the if statements run, then temp exists where temp->data == value
+        if (temp->prev) // if there is another node before temp
+            temp->prev->next = temp->next; // node after temp is set to be after previous node
         else
             head = temp->next; 
 
