@@ -35,7 +35,7 @@ public:
             return;
         }
 
-        Node* temp = head; // temp pointer created to help with traversing array
+        Node* temp = head; // temp pointer created to help with traversing list
         for (int i = 0; i < position && temp; ++i) // traverses array until specified position is reached or until temp = nullptr
             temp = temp->next; // sets temp as pointer to next node in the linked list
 
@@ -58,7 +58,7 @@ public:
     void delete_val(int value) { // delete's node based on the data var of Node
         if (!head) return; // if there is no head, there is nothing to delete, code exits
 
-        Node* temp = head; // for traversing the array, starts at head of list
+        Node* temp = head; // for traversing the list, starts at head of list
         
         while (temp && temp->data != value) // while temp exists, and the data of temp is not the same as value
             temp = temp->next; // temp is set to next node in list
@@ -68,59 +68,59 @@ public:
         // if none of the if statements run, then temp exists where temp->data == value
         if (temp->prev) // if there is another node before temp
             temp->prev->next = temp->next; // node after temp is set to be after previous node
-        else
-            head = temp->next; 
+        else // if there is no node before temp, that means it is the head
+            head = temp->next; // node after temp becomes new head
 
-        if (temp->next)
-            temp->next->prev = temp->prev;
-        else
-            tail = temp->prev; 
+        if (temp->next) // if there is a node after temp
+            temp->next->prev = temp->prev; // node after temp is set to be befire previous node
+        else // if there is no node after temp, then temp is the tail
+            tail = temp->prev; // node before temp becomes new tail
 
-        delete temp;
+        delete temp; // delete temp node and value
     }
 
-    void delete_pos(int pos) {
-        if (!head) {
-            cout << "List is empty." << endl;
-            return;
+    void delete_pos(int pos) { // deletes node based on the given position
+        if (!head) { // if head == nullptr, list is empty
+            cout << "List is empty." << endl; // display error message for user
+            return; // exit
         }
     
-        if (pos == 1) {
-            pop_front();
-            return;
+        if (pos == 1) { // if given position is the head node
+            pop_front(); // use pop_front to remove head node
+            return; // exit
         }
     
-        Node* temp = head;
+        Node* temp = head; // for traversing list
     
-        for (int i = 1; i < pos; i++){
-            if (!temp) {
-                cout << "Position doesn't exist." << endl;
-                return;
+        for (int i = 1; i < pos; i++){ // loops until desired position is reached
+            if (!temp) { // if temp does not exist, position is invalid
+                cout << "Position doesn't exist." << endl; // displays user statement
+                return; // exits
             }
-            else
-                temp = temp->next;
+            else // temp does exist
+                temp = temp->next; // temp is set to next node
         }
-        if (!temp) {
-            cout << "Position doesn't exist." << endl;
-            return;
+        if (!temp) { // if temp does not exist, position is invalid
+            cout << "Position doesn't exist." << endl; // displays user statement
+            return; // exits
+        }
+
+        if (!temp->next) { // if there is no node after temp, temp is the tail
+            pop_back(); // deletes the tail node
+            return; // exits
         }
     
-        if (!temp->next) {
-            pop_back();
-            return;
-        }
-    
-        Node* tempPrev = temp->prev;
-        tempPrev->next = temp->next;
-        temp->next->prev = tempPrev;
-        delete temp;
+        Node* tempPrev = temp->prev; // new node set to node before temp
+        tempPrev->next = temp->next; // node after temp is now after tempPrev
+        temp->next->prev = tempPrev; // tempPrev is now before node after temp
+        delete temp; // deletes temp node and value
     }
 
-    void push_back(int v) {
-        Node* newNode = new Node(v);
-        if (!tail)
-            head = tail = newNode;
-        else {
+    void push_back(int v) { // adds new node to the back where data = value
+        Node* newNode = new Node(v); // creates new node with data = value
+        if (!tail) // if tail does not exist, list is empty
+            head = tail = newNode; // newNode becomes first + last node in list
+        else { // if tail does exist (at least 1 other node in list)
             tail->next = newNode;
             newNode->prev = tail;
             tail = newNode;
