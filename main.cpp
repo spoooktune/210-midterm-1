@@ -214,7 +214,12 @@ public:
         }
         while (current){ // while the current node exists
             cout << current->data << " "; // output the value of the node
-            current = current->next->next; // set current node to the node after current's next node
+            if (current->next){ // if there is a node after current
+                current = current->next->next; // set current node to the node after current's next node
+            }
+            else{ // if there is no node after the current
+                current = nullptr; // current becomes nullptr to stop loop
+            }
         }
         cout << endl; // move to new line
     }
@@ -231,7 +236,9 @@ int main() {
     list.print(); // 1 2 3 4
     list.every_other_element(); // 1 3
     list.push_back(5);
-    list.every_other_element(); // 1 3 5
+    list.push_back(6);
+    list.push_back(7);
+    list.every_other_element(); // 1 3 5 7
 
     return 0;
 }
