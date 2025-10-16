@@ -26,13 +26,13 @@ public:
     void insert_after(int value, int position) { // creates a new node w/ value as data var, places after specified position in linked list
         if (position < 0) { // if the position is < 0, it cannot exist in the list, so must check if position is valid
             cout << "Position must be >= 0." << endl; // error message to tell user position is invalid
-            return;
+            return; // exits code
         }
 
         Node* newNode = new Node(value); // creating new node, data = value, prev = nullptr, next = nullptr
         if (!head) { // if there is no head -> if the list is empty
             head = tail = newNode; // makes newNode the new head
-            return;
+            return; // exits code
         }
 
         Node* temp = head; // temp pointer created to help with traversing list
@@ -42,7 +42,7 @@ public:
         if (!temp) { // if temp becomes nullptr -> specified position is greater than the # of elements in list
             cout << "Position exceeds list size. Node not inserted.\n"; // display error message for user
             delete newNode; // frees up storage space
-            return;
+            return; // exits code
         }
 
         // if previous if statements are not called, then position is valid, newNode can be inserted after it
@@ -202,13 +202,36 @@ public:
             cout << current->data << " "; // output the value of the node
             current = current->prev; // set current node to previous node in list
         }
-        cout << endl; // mpve to new line
+        cout << endl; // move to new line
+    }
+
+    // ADDED METHOD
+    void every_other_element(){ // displays every other element in order from head to tail, starting from head
+        Node* current = head; // for traversing list
+        if (!current){ // if current doesn't exist, list is empty
+            cout << "List is empty" << endl; // display message for user
+            return; // exit code
+        }
+        while (current){ // while the current node exists
+            cout << current->data << " "; // output the value of the node
+            current = current->next->next; // set current node to the node after current's next node
+        }
+        cout << endl; // move to new line
     }
 };
 
 int main() {
-    cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS;  // dummy statement to avoid compiler warning
+    cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS << endl;  // dummy statement to avoid compiler warning
+    DoublyLinkedList list;
+    list.every_other_element(); // should say list is empty
+    list.push_back(1);
+    list.push_back(2);
+    list.push_back(3);
+    list.push_back(4);
+    list.print(); // 1 2 3 4
+    list.every_other_element(); // 1 3
+    list.push_back(5);
+    list.every_other_element(); // 1 3 5
 
-    
     return 0;
 }
