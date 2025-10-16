@@ -116,93 +116,93 @@ public:
         delete temp; // deletes temp node and value
     }
 
-    void push_back(int v) { // adds new node to the back where data = value
+    void push_back(int v) { // adds new node to the back
         Node* newNode = new Node(v); // creates new node with data = value
         if (!tail) // if tail does not exist, list is empty
             head = tail = newNode; // newNode becomes first + last node in list
         else { // if tail does exist (at least 1 other node in list)
-            tail->next = newNode;
-            newNode->prev = tail;
-            tail = newNode;
+            tail->next = newNode; // tail is before newNode
+            newNode->prev = tail; // newNode is after the previous tail node
+            tail = newNode; // newNode becomes the new tail node
         }
     }
     
-    void push_front(int v) {
-        Node* newNode = new Node(v);
-        if (!head)
-            head = tail = newNode;
-        else {
-            newNode->next = head;
-            head->prev = newNode;
-            head = newNode;
+    void push_front(int v) { // adds new node to the front
+        Node* newNode = new Node(v); // creates new node with data = value
+        if (!head) // if head does not exist, list is empty
+            head = tail = newNode; // newNode becomes first + last node in list
+        else { // if head does exist (at least 1 node in list)
+            newNode->next = head; // newNode is before head
+            head->prev = newNode; // previous head is now after newNode
+            head = newNode; // newNode becomes new head node
         }
     }
     
-    void pop_front() {
+    void pop_front() { // deletes the head node
 
-        if (!head) {
-            cout << "List is empty." << endl;
-            return;
+        if (!head) { // if head does not exist, list is empty
+            cout << "List is empty." << endl; // error message for user
+            return; // exits code
         }
 
-        Node * temp = head;
+        Node * temp = head; // pointer that points to head node
 
-        if (head->next) {
-            head = head->next;
-            head->prev = nullptr;
+        if (head->next) { // if there is a node after head
+            head = head->next; // new head becomes node that was after head
+            head->prev = nullptr; // no node is before the head node
         }
-        else
-            head = tail = nullptr;
-        delete temp;
+        else // if there is only one node in list
+            head = tail = nullptr; // list is empty
+        delete temp; // deletes temp pointer for storage
     }
 
-    void pop_back() {
-        if (!tail) {
-            cout << "List is empty." << endl;
-            return;
+    void pop_back() { // deletes the tail node
+        if (!tail) { // if tail does not exist, list is empty
+            cout << "List is empty." << endl; // error message for user
+            return; // exits code
         }
-        Node * temp = tail;
+        Node * temp = tail; // pointer that points to tail node
 
-        if (tail->prev) {
-            tail = tail->prev;
-            tail->next = nullptr;
+        if (tail->prev) { // if there is a node before the tail
+            tail = tail->prev; // new tail becomes node that was before tail
+            tail->next = nullptr; // no node is after tail node
         }
-        else
-            head = tail = nullptr;
-        delete temp;
+        else // if there is only one node in list
+            head = tail = nullptr; // list is empty
+        delete temp; // deletes temp pointer for storage
     }
 
-    ~DoublyLinkedList() {
-        while (head) {
-            Node* temp = head;
-            head = head->next;
-            delete temp;
+    ~DoublyLinkedList() { // destructor for deleting the linked list
+        while (head) { // while the head node exists
+            Node* temp = head; // declare temp node that points to head
+            head = head->next; // new head is the one after head node
+            delete temp; // previous head node gets deleted
         }
     }
-    void print() {
-        Node* current = head;
-        if (!current) {
-            cout << "List is empty." << endl;
-            return;
+    void print() { // displays all elements in order from head to tail
+        Node* current = head; // for traversing list
+        if (!current) { // if current doesn't exist, list is empty
+            cout << "List is empty." << endl; // display message for user
+            return; // exit code
         }
-        while (current) {
-            cout << current->data << " ";
-            current = current->next;
+        while (current) { // while the current node exists
+            cout << current->data << " "; // output the value of the node
+            current = current->next; // set current to next node
         }
-        cout << endl;
+        cout << endl; // move to new line
     }
 
-    void print_reverse() {
-        Node* current = tail;
-        if (!current) { 
-            cout << "List is empty." << endl;
-            return;
+    void print_reverse() { // displays all elements in order from tail to head
+        Node* current = tail; // for traversing list
+        if (!current) { // if current doesn't exist, list is empty
+            cout << "List is empty." << endl; // display message for user
+            return; // exit code
         }
-        while (current) {
-            cout << current->data << " ";
-            current = current->prev;
+        while (current) { // while the current node exists
+            cout << current->data << " "; // output the value of the node
+            current = current->prev; // set current node to previous node in list
         }
-        cout << endl;
+        cout << endl; // mpve to new line
     }
 };
 
